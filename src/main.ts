@@ -1,8 +1,39 @@
+import { createPgPool } from "./infra/db/postgres/createPool.js";
+import { PgClient } from "./infra/db/postgres/PgClient.js";
+import { UserRepositoryPg } from "./infra/db/postgres/UserRepository.js";
+import { CreateUser } from "./application/user/CreateUser.js";
+import { ListUser } from "./application/user/ListUser.js";
+import { CreateUserController } from "./infra/http/controllers/CreateUserController.js";
+import { ListUserController } from "./infra/http/controllers/ListUserController.js";
+import { createRoutes } from "./infra/http/routes.js";
 import { createApp } from "./infra/http/server.js";
 
-const app = createApp();
+const pool = createPgPool();
+const db = new PgClient(pool);
+const userRepository = new UserRepositoryPg(db);
+
+const createUser = new CreateUser(userRepository);
+const listUser = new ListUser(userRepository);
+
+const createUserController = new CreateUserController(createUser);
+const listUserController = new ListUserController(listUser);
+
+const routes = createRoutes({
+  createUserController,
+  listUserController,
+});
+
+const app = createApp(routes);
 const port = Number(process.env.PORT) || 3000;
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
+
+const shutdown = async () => {
+  await pool.end();
+  server.close();
+};
+
+process.on("SIGINT", shutdown);
+process.on("SIGTERM", shutdown);

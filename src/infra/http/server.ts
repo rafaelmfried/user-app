@@ -1,9 +1,8 @@
-import type { Express } from "express";
+import type { Express, Router } from "express";
 import express from "express";
 import { errorMiddleware } from "./middleware/errorMiddleware.js";
-import routes from "./routes.js";
 
-export function createApp(): Express {
+export function createApp(routes: Router): Express {
   const app = express();
   app.use(express.json());
   app.use(routes);
