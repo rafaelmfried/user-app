@@ -1,7 +1,8 @@
 import type { NextFunction, Request, Response } from "express";
 import type { HealthCheck } from "../../../application/health/HealthCheck.js";
+import type { HttpController } from "./HttpController.js";
 
-export class HealthCheckController {
+export class HealthCheckController implements HttpController {
   constructor(private readonly healthCheck: HealthCheck) {}
 
   handle = async (

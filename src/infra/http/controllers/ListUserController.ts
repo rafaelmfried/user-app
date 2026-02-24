@@ -1,7 +1,8 @@
 import type { NextFunction, Request, Response } from "express";
 import type { ListUser } from "../../../application/user/ListUser.js";
+import type { HttpController } from "./HttpController.js";
 
-export class ListUserController {
+export class ListUserController implements HttpController {
   constructor(private readonly listUser: ListUser) {}
 
   handle = async (_req: Request, res: Response, next: NextFunction): Promise<void> => {
