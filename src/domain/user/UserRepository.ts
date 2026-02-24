@@ -1,4 +1,4 @@
-import type { User } from "./index.js";
+import type { User } from "./User.js";
 
 export interface CreateUserResult {
   id: number;
