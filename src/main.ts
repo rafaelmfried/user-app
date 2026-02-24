@@ -1,15 +1,15 @@
-import { HealthCheck } from "./infra/http/health/HealthCheck.js";
-import { CreateUser } from "./application/user/CreateUser.js";
-import { ListUser } from "./application/user/ListUser.js";
-import { createPgPool } from "./infra/db/client/createPool.js";
-import { PgClient } from "./infra/db/client/PgClient.js";
-import { UserRepositoryPg } from "./infra/db/repositories/UserRepositoryPg.js";
-import { CreateUserController } from "./infra/http/controllers/CreateUserController.js";
-import { HealthCheckController } from "./infra/http/controllers/HealthCheckController.js";
-import { ListUserController } from "./infra/http/controllers/ListUserController.js";
+import { CreateUser, ListUser } from "./application/user/index.js";
+import { createPgPool, PgClient } from "./infra/db/client/index.js";
+import { UserRepositoryPg } from "./infra/db/repositories/index.js";
+import {
+  CreateUserController,
+  HealthCheckController,
+  ListUserController,
+} from "./infra/http/controllers/index.js";
+import { HealthCheck } from "./infra/http/health/index.js";
 import { createRoutes } from "./infra/http/routes.js";
 import { createApp } from "./infra/http/server.js";
-import { env } from "./shared/config/env.js";
+import { env } from "./shared/config/index.js";
 
 const pool = createPgPool();
 const db = new PgClient(pool);
