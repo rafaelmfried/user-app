@@ -1,44 +1,28 @@
-# Stage 0: Instalação do Node.js e configuração do ambiente
+# Stage 0: Base Alpine com Node exato
 ARG NODE_VERSION=22.20.0
-FROM debian:trixie AS setup
-ARG NODE_VERSION
-ENV NODE_VERSION=${NODE_VERSION}
-# Instalar Node.js exato e dependências necessárias
-RUN apt-get update && apt-get install -y curl ca-certificates xz-utils \
-    && ARCH="$(dpkg --print-architecture)" \
-    && case "$ARCH" in \
-         amd64) NODE_ARCH="x64" ;; \
-         arm64) NODE_ARCH="arm64" ;; \
-         armhf) NODE_ARCH="armv7l" ;; \
-         *) echo "Arquitetura não suportada: $ARCH" >&2; exit 1 ;; \
-       esac \
-    && curl -fsSLO "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-${NODE_ARCH}.tar.xz" \
-    && tar -xJf "node-v${NODE_VERSION}-linux-${NODE_ARCH}.tar.xz" -C /usr/local --strip-components=1 \
-    && rm "node-v${NODE_VERSION}-linux-${NODE_ARCH}.tar.xz" \
-    && npm install -g corepack \
-    && corepack enable \
-    && corepack prepare pnpm@latest --activate \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# Stage 1: Base -> Instalacao das dependencias globais
-FROM setup AS base
+ARG ALPINE_VERSION=3.20
+FROM node:${NODE_VERSION}-alpine${ALPINE_VERSION} AS base
 WORKDIR /app
 
-# Stage 2: Build -> Copia os arquivos e instala as dependencias do projeto
-FROM base AS build
+# Stage 1: Dependencias (com dev para build)
+FROM base AS deps
+RUN corepack enable && corepack prepare pnpm@latest --activate
 COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
+
+# Stage 2: Build
+FROM deps AS build
 COPY . .
-RUN pnpm run build
+RUN pnpm run build \
+    && pnpm prune --prod
 
-# Stage 3: Development -> Configura o ambiente de desenvolvimento
-FROM build AS development
-ENV NODE_ENV=development
-EXPOSE 3000
-CMD ["pnpm", "run", "dev"]
-
-# Stage 4: Production -> Configura o ambiente de produção
-FROM build AS production
+# Stage 3: Runtime minimo
+FROM node:${NODE_VERSION}-alpine${ALPINE_VERSION} AS production
+WORKDIR /app
 ENV NODE_ENV=production
+COPY --from=build /app/node_modules /app/node_modules
+COPY --from=build /app/dist /app/dist
+COPY package.json ./
+USER node
 EXPOSE 3000
-CMD ["pnpm", "run", "start"]
+CMD ["node", "dist/main.js"]
