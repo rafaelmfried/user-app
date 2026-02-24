@@ -7,20 +7,20 @@ export type AppEnv = {
   debugErrors: boolean;
 };
 
-function toNodeEnv(value: string | undefined): NodeEnv {
+export function toNodeEnv(value: string | undefined): NodeEnv {
   if (value === "production" || value === "test" || value === "development") {
     return value;
   }
   return "development";
 }
 
-function toNumber(value: string | undefined, fallback: number): number {
+export function toNumber(value: string | undefined, fallback: number): number {
   if (!value) return fallback;
   const parsed = Number(value);
   return Number.isFinite(parsed) ? parsed : fallback;
 }
 
-function toBool(value: string | undefined): boolean {
+export function toBool(value: string | undefined): boolean {
   if (!value) return false;
   return (
     value === "1" ||
