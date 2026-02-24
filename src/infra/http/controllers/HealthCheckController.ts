@@ -1,5 +1,5 @@
 import type { NextFunction, Request, Response } from "express";
-import type { HealthCheck } from "../../../application/health/HealthCheck.js";
+import type { HealthCheck } from "../health/HealthCheck.js";
 import type { HttpController } from "./HttpController.js";
 
 export class HealthCheckController implements HttpController {

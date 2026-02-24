@@ -1,4 +1,4 @@
-import { HealthCheck } from "./application/health/HealthCheck.js";
+import { HealthCheck } from "./infra/http/health/HealthCheck.js";
 import { CreateUser } from "./application/user/CreateUser.js";
 import { ListUser } from "./application/user/ListUser.js";
 import { createPgPool } from "./infra/db/postgres/createPool.js";
