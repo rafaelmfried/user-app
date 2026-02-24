@@ -1,9 +1,9 @@
+import { HealthCheck } from "./application/health/HealthCheck.js";
+import { CreateUser } from "./application/user/CreateUser.js";
+import { ListUser } from "./application/user/ListUser.js";
 import { createPgPool } from "./infra/db/postgres/createPool.js";
 import { PgClient } from "./infra/db/postgres/PgClient.js";
 import { UserRepositoryPg } from "./infra/db/postgres/UserRepository.js";
-import { CreateUser } from "./application/user/CreateUser.js";
-import { ListUser } from "./application/user/ListUser.js";
-import { HealthCheck } from "./application/health/HealthCheck.js";
 import { CreateUserController } from "./infra/http/controllers/CreateUserController.js";
 import { HealthCheckController } from "./infra/http/controllers/HealthCheckController.js";
 import { ListUserController } from "./infra/http/controllers/ListUserController.js";
@@ -29,7 +29,7 @@ const routes = createRoutes({
 });
 
 const app = createApp(routes);
-const port = Number(process.env.PORT) || 3000;
+const port = Number(process.env.PORT) || 8080;
 
 const server = app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

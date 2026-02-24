@@ -1,0 +1,16 @@
+@base_url=http://localhost:8080
+
+### Get all users
+GET {{base_url}}/users
+
+### Create a new user
+POST {{base_url}}/users
+Content-Type: application/json
+
+{
+  "name": "Test User",
+  "email": "test@test.com"
+}
+
+### Health check
+GET {{base_url}}/health

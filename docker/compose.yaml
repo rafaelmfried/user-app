@@ -9,8 +9,10 @@ services:
         NODE_VERSION: "22.22.0"
         ALPINE_VERSION: "3.22"
     environment:
+      DATABASE_URL: "postgresql://user:password@db:5432/mydb"
       NODE_VERSION: "22.22.0"
       NODE_ENV: production
+      PORT: 8080
     container_name: api-container
     ports:
       - 8080:8080
