@@ -1,12 +1,10 @@
 import { Router } from "express";
-import type { CreateUserController } from "./controllers/CreateUserController.js";
-import type { HealthCheckController } from "./controllers/HealthCheckController.js";
-import type { ListUserController } from "./controllers/ListUserController.js";
+import type { HttpController } from "./controllers/HttpController.js";
 
 export type HttpControllers = {
-  createUserController: CreateUserController;
-  listUserController: ListUserController;
-  healthCheckController: HealthCheckController;
+  createUserController: HttpController;
+  listUserController: HttpController;
+  healthCheckController: HttpController;
 };
 
 export function createRoutes(controllers: HttpControllers): Router {
