@@ -21,6 +21,10 @@ export default {
   timeoutMS: 60000,
   // Explicit plugin loading for pnpm
   plugins: ["@stryker-mutator/jest-runner"],
+  // Use mutation-specific jest config (only unit tests)
+  jest: {
+    configFile: "jest.mutation.config.ts",
+  },
   // Ignore static mutants to speed up testing (31% of mutants take 76% of time)
   ignoreStatic: true,
   // Disable type checks for faster runs
