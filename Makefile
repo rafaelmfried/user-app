@@ -111,7 +111,7 @@ test-mutation: test-build
 		-v $(PWD)/migrations:/app/migrations:ro \
 		-v $(PWD)/jest.config.ts:/app/jest.config.ts:ro \
 		-v $(PWD)/tsconfig.json:/app/tsconfig.json:ro \
-		-v $(PWD)/stryker.config.json:/app/stryker.config.json:ro \
+		-v $(PWD)/stryker.config.mjs:/app/stryker.config.mjs:ro \
 		-v $(PWD)/reports:/app/reports \
 		-e NODE_ENV=test \
 		-e TESTCONTAINERS_RYUK_DISABLED=true \

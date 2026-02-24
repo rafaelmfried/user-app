@@ -17,14 +17,14 @@ export default {
     low: 70,
     break: 65,
   },
-  concurrency: 2,
+  concurrency: 4,
   timeoutMS: 60000,
-  // Only run unit tests for mutation (faster)
-  jest: {
-    configFile: "jest.config.ts",
-    enableFindRelatedTests: true,
-  },
-  // Ignore integration/e2e for mutation testing
+  // Explicit plugin loading for pnpm
+  plugins: ["@stryker-mutator/jest-runner"],
+  // Ignore static mutants to speed up testing (31% of mutants take 76% of time)
+  ignoreStatic: true,
+  // Disable type checks for faster runs
+  disableTypeChecks: "**/*.ts",
   tempDirName: ".stryker-tmp",
   cleanTempDir: "always",
 };

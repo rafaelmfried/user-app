@@ -7,7 +7,7 @@ WORKDIR /app
 # Stage 1: Dependencias (com dev para build)
 FROM base AS deps
 RUN corepack enable && corepack prepare pnpm@latest --activate
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml .npmrc ./
 RUN pnpm install --frozen-lockfile
 
 # Stage 2: Build
