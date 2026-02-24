@@ -5,10 +5,23 @@ set -eu
 
 MIGRATIONS_DIR="${MIGRATIONS_DIR:-./migrations}"
 
-until psql "$DATABASE_URL" -c "select 1" >/dev/null 2>&1; do
+DB_NAME="$(echo "$DATABASE_URL" | awk -F/ '{print $NF}' | cut -d? -f1)"
+DB_BASE_URL="${DATABASE_URL%/*}"
+ADMIN_URL="${DB_BASE_URL}/postgres"
+
+until psql "$ADMIN_URL" -c "select 1" >/dev/null 2>&1; do
   echo "Aguardando o banco de dados..."
   sleep 1
 done
+
+psql "$ADMIN_URL" -v ON_ERROR_STOP=1 <<SQL
+DO \$\$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_database WHERE datname = '$DB_NAME') THEN
+    EXECUTE format('CREATE DATABASE %I', '$DB_NAME');
+  END IF;
+END\$\$;
+SQL
 
 psql "$DATABASE_URL" -v ON_ERROR_STOP=1 <<'SQL'
 CREATE TABLE IF NOT EXISTS schema_migrations (
