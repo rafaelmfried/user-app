@@ -6,6 +6,20 @@ const config: Config = {
   roots: ["<rootDir>/tests", "<rootDir>/src"],
   testMatch: ["**/tests/**/*.test.ts"],
 
+  // Reporter configuration for better readability
+  reporters: [
+    "<rootDir>/tests/setup/customReporter.ts",
+    [
+      "jest-html-reporters",
+      {
+        publicPath: "./coverage/html-report",
+        filename: "test-report.html",
+        openReport: false,
+        pageTitle: "Test Report",
+      },
+    ],
+  ],
+
   // ESM Support
   extensionsToTreatAsEsm: [".ts"],
   moduleNameMapper: {
