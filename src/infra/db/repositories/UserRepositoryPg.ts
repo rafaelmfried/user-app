@@ -6,7 +6,7 @@ import { PgClient } from "../client/index.js";
 export class UserRepositoryPg implements UserRepositoryPort {
   constructor(private readonly db: PgClient) {}
 
-  async create(user: UserType): Promise<CreateUserResult> {
+  async create(user: User): Promise<CreateUserResult> {
     const result = await this.db.query<{ id: number }>(
       "INSERT INTO users (name, email, created_at) VALUES ($1, $2, $3) RETURNING id",
       [user.getName(), user.getEmail().get(), user.getCreatedAt()],
@@ -14,7 +14,7 @@ export class UserRepositoryPg implements UserRepositoryPort {
     return { id: result.rows[0]?.id ?? -1 };
   }
 
-  async findAll(): Promise<UserType[]> {
+  async findAll(): Promise<User[]> {
     const result = await this.db.query<{
       id: number;
       name: string;
@@ -27,7 +27,7 @@ export class UserRepositoryPg implements UserRepositoryPort {
     );
   }
 
-  async findByEmail(email: string): Promise<UserType | null> {
+  async findByEmail(email: string): Promise<User | null> {
     const result = await this.db.query<{
       id: number;
       name: string;
