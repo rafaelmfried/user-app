@@ -79,6 +79,7 @@ export function createSwaggerSpec() {
               id: { type: "integer", example: 1 },
               name: { type: "string", example: "Alice" },
               email: { type: "string", example: "alice@mail.com" },
+              createdAt: { type: "string", format: "date-time" },
             },
             required: ["name", "email"],
           },
