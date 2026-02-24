@@ -14,7 +14,7 @@ flowchart LR
     UC --> Ports[Repository Port]
   end
   subgraph Domain
-    UC --> Domain[User / Email]
+    UC --> Entities[User / Email]
   end
   subgraph Infrastructure
     Ports --> PgRepo[Pg Repository]
