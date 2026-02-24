@@ -1,4 +1,5 @@
 import pg from "pg";
+import { mapPgError } from "./pgErrorMapper.js";
 
 export class PgClient {
   private client: pg.Client;
@@ -7,14 +8,19 @@ export class PgClient {
     this.client = client;
   }
 
-  async query<T extends pg.QueryResultRow = any>(
+  async query<T extends pg.QueryResultRow = pg.QueryResultRow>(
     queryText: string,
-    params?: unknown[],
+    params: unknown[] = [],
   ): Promise<pg.QueryResult<T>> {
     try {
       const res = await this.client.query(queryText, params);
       return res;
     } catch (err) {
+      const mapped = mapPgError(err);
+      if (mapped) {
+        console.error("Database query error:", mapped);
+        throw mapped;
+      }
       console.error("Database query error:", err);
       throw err;
     }
@@ -25,6 +31,11 @@ export class PgClient {
       await this.client.connect();
       console.debug("Database connection established");
     } catch (err) {
+      const mapped = mapPgError(err);
+      if (mapped) {
+        console.error("Database connection error:", mapped);
+        throw mapped;
+      }
       console.error("Database connection error:", err);
       throw err;
     }
@@ -35,6 +46,11 @@ export class PgClient {
       await this.client.end();
       console.debug("Database connection closed");
     } catch (err) {
+      const mapped = mapPgError(err);
+      if (mapped) {
+        console.error("Database disconnection error:", mapped);
+        throw mapped;
+      }
       console.error("Database disconnection error:", err);
       throw err;
     }

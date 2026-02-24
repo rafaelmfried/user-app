@@ -14,11 +14,13 @@
   "license": "ISC",
   "packageManager": "pnpm@10.25.0",
   "devDependencies": {
+    "@types/express": "^4.17.21",
     "@types/node": "^25.3.0",
     "@types/pg": "^8.16.0",
     "typescript": "^5.9.3"
   },
   "dependencies": {
+    "express": "^4.22.1",
     "pg": "^8.18.0"
   }
 }
