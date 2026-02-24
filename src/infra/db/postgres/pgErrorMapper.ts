@@ -83,7 +83,11 @@ export function mapPgError(err: unknown): AppError | null {
 }
 
 function isPgErrorLike(err: unknown): err is PgErrorLike {
-  return typeof err === "object" && err !== null && "code" in err;
+  if (typeof err !== "object" || err === null || !("code" in err)) {
+    return false;
+  }
+  const code = String((err as { code?: string }).code ?? "");
+  return /^[0-9A-Z]{5}$/i.test(code);
 }
 
 function pickDetails(err: PgErrorLike): Record<string, unknown> {
