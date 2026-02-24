@@ -1,4 +1,5 @@
 import type { NextFunction, Request, Response } from "express";
+import { env } from "../../../shared/config/env.js";
 import { AppError, isAppError } from "../../../shared/errors/AppError.js";
 
 export function errorMiddleware(
@@ -8,12 +9,13 @@ export function errorMiddleware(
   _next: NextFunction,
 ): void {
   const appError = normalizeError(err);
+  const debugEnabled = env.debugErrors;
   const responseBody: Record<string, unknown> = {
     error: appError.code,
     message: appError.message,
   };
 
-  if (process.env.NODE_ENV !== "production") {
+  if (debugEnabled) {
     if (appError.details) {
       responseBody.details = appError.details;
     }
