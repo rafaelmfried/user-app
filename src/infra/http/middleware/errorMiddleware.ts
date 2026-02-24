@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
-import { env } from "../../../shared/config/env.js";
-import { AppError, isAppError } from "../../../shared/errors/AppError.js";
+import { env } from "../../../shared/config/index.js";
+import { AppError, isAppError } from "../../../shared/errors/index.js";
 
 export function errorMiddleware(
   err: unknown,

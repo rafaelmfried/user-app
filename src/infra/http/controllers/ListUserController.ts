@@ -1,5 +1,5 @@
 import type { NextFunction, Request, Response } from "express";
-import type { ListUser } from "../../../application/user/ListUser.js";
+import type { ListUser } from "../../../application/user/index.js";
 import type { HttpController } from "./HttpController.js";
 
 export class ListUserController implements HttpController {

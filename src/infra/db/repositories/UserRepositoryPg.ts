@@ -1,11 +1,7 @@
-import type { User as UserType } from "../../../domain/user/User.js";
-import { User } from "../../../domain/user/User.js";
-import type {
-  CreateUserResult,
-  UserRepositoryPort,
-} from "../../../domain/user/UserRepository.js";
-import { Email } from "../../../domain/value-objects/Email.js";
-import { PgClient } from "../client/PgClient.js";
+import type { CreateUserResult, UserRepositoryPort } from "../../../domain/user/index.js";
+import { User } from "../../../domain/user/index.js";
+import { Email } from "../../../domain/value-objects/index.js";
+import { PgClient } from "../client/index.js";
 
 export class UserRepositoryPg implements UserRepositoryPort {
   constructor(private readonly db: PgClient) {}
