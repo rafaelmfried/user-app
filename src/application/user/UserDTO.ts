@@ -13,17 +13,14 @@ export type UserDTO = {
 };
 
 export function toUserDTO(user: User): UserDTO {
-  const dto: UserDTO = {
-    name: user.getName(),
-    email: user.getEmail().get(),
-    createdAt: user.getCreatedAt(),
-  };
-
   const id = user.getId();
+  const name = user.getName();
+  const email = user.getEmail().get();
+  const createdAt = user.getCreatedAt?.();
 
   if (id !== undefined) {
-    dto.id = id;
+    return { id, name, email, ...(createdAt && { createdAt }) };
   }
 
-  return { ...dto };
+  return { name, email, ...(createdAt && { createdAt }) };
 }
