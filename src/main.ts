@@ -3,7 +3,9 @@ import { PgClient } from "./infra/db/postgres/PgClient.js";
 import { UserRepositoryPg } from "./infra/db/postgres/UserRepository.js";
 import { CreateUser } from "./application/user/CreateUser.js";
 import { ListUser } from "./application/user/ListUser.js";
+import { HealthCheck } from "./application/health/HealthCheck.js";
 import { CreateUserController } from "./infra/http/controllers/CreateUserController.js";
+import { HealthCheckController } from "./infra/http/controllers/HealthCheckController.js";
 import { ListUserController } from "./infra/http/controllers/ListUserController.js";
 import { createRoutes } from "./infra/http/routes.js";
 import { createApp } from "./infra/http/server.js";
@@ -14,13 +16,16 @@ const userRepository = new UserRepositoryPg(db);
 
 const createUser = new CreateUser(userRepository);
 const listUser = new ListUser(userRepository);
+const healthCheck = new HealthCheck();
 
 const createUserController = new CreateUserController(createUser);
 const listUserController = new ListUserController(listUser);
+const healthCheckController = new HealthCheckController(healthCheck);
 
 const routes = createRoutes({
   createUserController,
   listUserController,
+  healthCheckController,
 });
 
 const app = createApp(routes);
