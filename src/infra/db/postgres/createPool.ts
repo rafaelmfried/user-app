@@ -1,7 +1,8 @@
 import pg from "pg";
+import { env } from "../../../shared/config/env.js";
 
 export function createPgPool(): pg.Pool {
-  const connectionString = process.env.DATABASE_URL;
+  const connectionString = env.databaseUrl;
 
   if (connectionString) {
     return new pg.Pool({ connectionString });

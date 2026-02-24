@@ -9,6 +9,7 @@ import { HealthCheckController } from "./infra/http/controllers/HealthCheckContr
 import { ListUserController } from "./infra/http/controllers/ListUserController.js";
 import { createRoutes } from "./infra/http/routes.js";
 import { createApp } from "./infra/http/server.js";
+import { env } from "./shared/config/env.js";
 
 const pool = createPgPool();
 const db = new PgClient(pool);
@@ -29,7 +30,7 @@ const routes = createRoutes({
 });
 
 const app = createApp(routes);
-const port = Number(process.env.PORT) || 8080;
+const port = env.port;
 
 const server = app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
