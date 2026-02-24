@@ -1,9 +1,9 @@
 import { HealthCheck } from "./infra/http/health/HealthCheck.js";
 import { CreateUser } from "./application/user/CreateUser.js";
 import { ListUser } from "./application/user/ListUser.js";
-import { createPgPool } from "./infra/db/postgres/createPool.js";
-import { PgClient } from "./infra/db/postgres/PgClient.js";
-import { UserRepositoryPg } from "./infra/db/postgres/UserRepository.js";
+import { createPgPool } from "./infra/db/client/createPool.js";
+import { PgClient } from "./infra/db/client/PgClient.js";
+import { UserRepositoryPg } from "./infra/db/repositories/UserRepositoryPg.js";
 import { CreateUserController } from "./infra/http/controllers/CreateUserController.js";
 import { HealthCheckController } from "./infra/http/controllers/HealthCheckController.js";
 import { ListUserController } from "./infra/http/controllers/ListUserController.js";
