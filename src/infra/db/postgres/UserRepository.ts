@@ -30,4 +30,27 @@ export class UserRepositoryPg implements UserRepositoryPort {
       (row) => new User(row.name, new Email(row.email), row.id, row.created_at),
     );
   }
+
+  async findByEmail(email: string): Promise<UserType | null> {
+    const result = await this.db.query<{
+      id: number;
+      name: string;
+      email: string;
+      created_at: Date;
+    }>("SELECT id, name, email, created_at FROM users WHERE email = $1", [
+      email,
+    ]);
+
+    const [row] = result.rows;
+
+    if (!row) {
+      return null;
+    }
+
+    if (result.rows.length > 1) {
+      throw new Error(`Multiple users found with email: ${email}`);
+    }
+
+    return new User(row.name, new Email(row.email), row.id, row.created_at);
+  }
 }

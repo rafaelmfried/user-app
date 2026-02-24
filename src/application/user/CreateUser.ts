@@ -20,6 +20,14 @@ export class CreateUser {
     try {
       const email = new Email(input.email);
       const user = new User(input.name, email);
+      const existingUser = await this.userRepository.findByEmail(email.get());
+      if (existingUser) {
+        throw new AppError({
+          statusCode: 400,
+          code: "VALIDATION_ERROR",
+          message: "Email already in use",
+        });
+      }
       const result = await this.userRepository.create(user);
       user.setId(result.id);
       return toUserDTO(user);
