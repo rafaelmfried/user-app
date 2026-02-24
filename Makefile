@@ -1,4 +1,4 @@
-.PHONY: build up down logs recriate check-scout
+.PHONY: build up down logs recriate check-scout migrate
 
 build:
 	docker-compose -f docker/compose.yaml build
@@ -16,3 +16,6 @@ recriate: down up
 
 check-scout:
 	./scripts/scout.sh api-image:1.0.0
+
+migrate:
+	docker compose -f docker/compose.yaml --profile tools run --rm migrate
