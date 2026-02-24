@@ -22,6 +22,24 @@ WORKDIR /app
 ENV NODE_ENV=development
 CMD ["pnpm", "run", "start:dev"]
 
+# Stage 4: Test Unit
+FROM deps AS test-unit
+WORKDIR /app
+ENV NODE_ENV=test
+CMD ["pnpm", "test:unit"]
+
+# Stage 5: Test Integration
+FROM deps AS test-integration
+WORKDIR /app
+ENV NODE_ENV=test
+CMD ["pnpm", "test:integration"]
+
+# Stage 6: Test E2E
+FROM deps AS test-e2e
+WORKDIR /app
+ENV NODE_ENV=test
+CMD ["pnpm", "test:e2e"]
+
 # Stage 3: Runtime minimo
 FROM node:${NODE_VERSION}-alpine${ALPINE_VERSION} AS production
 WORKDIR /app

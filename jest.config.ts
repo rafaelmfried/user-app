@@ -1,7 +1,7 @@
 import type { Config } from "jest";
 
 const config: Config = {
-  preset: "ts-jest",
+  preset: "ts-jest/presets/default-esm",
   testEnvironment: "node",
   roots: ["<rootDir>/tests", "<rootDir>/src"],
   testMatch: ["**/tests/**/*.test.ts"],
@@ -12,10 +12,17 @@ const config: Config = {
     "^(\\.{1,2}/.*)\\.js$": "$1",
   },
   transform: {
-    "^.+\\.ts$": [
+    "^.+\\.tsx?$": [
       "ts-jest",
       {
         useESM: true,
+        tsconfig: {
+          module: "ESNext",
+          moduleResolution: "bundler",
+          esModuleInterop: true,
+          allowSyntheticDefaultImports: true,
+          strict: true,
+        },
       },
     ],
   },
