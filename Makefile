@@ -39,6 +39,7 @@ test: test-build
 		-v /var/run/docker.sock:/var/run/docker.sock \
 		-v $(PWD)/src:/app/src:ro \
 		-v $(PWD)/tests:/app/tests:ro \
+		-v $(PWD)/migrations:/app/migrations:ro \
 		-v $(PWD)/jest.config.ts:/app/jest.config.ts:ro \
 		-v $(PWD)/tsconfig.json:/app/tsconfig.json:ro \
 		-e NODE_ENV=test \
@@ -65,7 +66,7 @@ test-integration: test-build
 		-v $(PWD)/tests:/app/tests:ro \
 		-v $(PWD)/jest.config.ts:/app/jest.config.ts:ro \
 		-v $(PWD)/tsconfig.json:/app/tsconfig.json:ro \
-		-v $(PWD)/docker/migrations:/app/docker/migrations:ro \
+		-v $(PWD)/migrations:/app/migrations:ro \
 		-e NODE_ENV=test \
 		-e TESTCONTAINERS_RYUK_DISABLED=true \
 		$(TEST_IMAGE) pnpm test:integration
@@ -79,7 +80,7 @@ test-e2e: test-build
 		-v $(PWD)/tests:/app/tests:ro \
 		-v $(PWD)/jest.config.ts:/app/jest.config.ts:ro \
 		-v $(PWD)/tsconfig.json:/app/tsconfig.json:ro \
-		-v $(PWD)/docker/migrations:/app/docker/migrations:ro \
+		-v $(PWD)/migrations:/app/migrations:ro \
 		-e NODE_ENV=test \
 		-e TESTCONTAINERS_RYUK_DISABLED=true \
 		$(TEST_IMAGE) pnpm test:e2e
@@ -93,7 +94,7 @@ test-coverage: test-build
 		-v $(PWD)/tests:/app/tests:ro \
 		-v $(PWD)/jest.config.ts:/app/jest.config.ts:ro \
 		-v $(PWD)/tsconfig.json:/app/tsconfig.json:ro \
-		-v $(PWD)/docker/migrations:/app/docker/migrations:ro \
+		-v $(PWD)/migrations:/app/migrations:ro \
 		-v $(PWD)/coverage:/app/coverage \
 		-e NODE_ENV=test \
 		-e TESTCONTAINERS_RYUK_DISABLED=true \
@@ -107,6 +108,7 @@ test-mutation: test-build
 		-v /var/run/docker.sock:/var/run/docker.sock \
 		-v $(PWD)/src:/app/src:ro \
 		-v $(PWD)/tests:/app/tests:ro \
+		-v $(PWD)/migrations:/app/migrations:ro \
 		-v $(PWD)/jest.config.ts:/app/jest.config.ts:ro \
 		-v $(PWD)/tsconfig.json:/app/tsconfig.json:ro \
 		-v $(PWD)/stryker.config.json:/app/stryker.config.json:ro \
