@@ -104,3 +104,9 @@ MIT
 
 Rafael Friederick - rafael.friederick@unnamed-lab.com
 GitHub: rafaelmfried
+
+## **Contribuidores**
+
+- [@rafaelmfried](https://github.com/rafaelmfried)
+- [@unnamed-lab](https://unnamed-lab.com)
+- [@tellos-tech](https://tellostecnologia.com)
