@@ -103,7 +103,6 @@ MIT
 ## **Autor**
 
 Rafael Friederick - rafael.friederick@unnamed-lab.com
-GitHub: rafaelmfried
 
 ## **Contribuidores**
 
