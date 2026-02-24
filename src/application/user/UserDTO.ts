@@ -9,18 +9,21 @@ export type UserDTO = {
   id?: number;
   name: string;
   email: string;
+  createdAt?: Date;
 };
 
 export function toUserDTO(user: User): UserDTO {
   const dto: UserDTO = {
     name: user.getName(),
     email: user.getEmail().get(),
+    createdAt: user.getCreatedAt(),
   };
 
   const id = user.getId();
+
   if (id !== undefined) {
     dto.id = id;
   }
 
-  return dto;
+  return { ...dto };
 }
