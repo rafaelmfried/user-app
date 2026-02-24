@@ -12,6 +12,9 @@ export function createRoutes(controllers: HttpControllers): Router {
 
   router.post("/users", controllers.createUserController.handle);
   router.get("/users", controllers.listUserController.handle);
+  router.get("/health", (req, res) => {
+    res.status(200).json({ status: "ok" });
+  });
 
   return router;
 }
