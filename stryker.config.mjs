@@ -31,4 +31,8 @@ export default {
   disableTypeChecks: "**/*.ts",
   tempDirName: ".stryker-tmp",
   cleanTempDir: "always",
+  // Output HTML report to reports directory
+  htmlReporter: {
+    fileName: "reports/mutation.html",
+  },
 };
