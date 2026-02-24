@@ -1,3 +1,4 @@
+import { ValidationError } from "../errors/index.js";
 import type { Email } from "../value-objects/index.js";
 
 export class User {
@@ -8,7 +9,7 @@ export class User {
 
   constructor(name: string, email: Email, id?: number, createdAt?: Date) {
     if (!this.validateName(name)) {
-      throw new Error("Name cannot be empty");
+      throw new ValidationError("Name cannot be empty");
     }
     this.name = name;
     this.email = email;

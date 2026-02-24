@@ -1,3 +1,4 @@
+import { ValidationError } from "../../domain/errors/index.js";
 import { User } from "../../domain/user/index.js";
 import type { UserRepositoryPort } from "../../domain/user/index.js";
 import { Email } from "../../domain/value-objects/index.js";
@@ -35,7 +36,7 @@ export class CreateUser {
       if (err instanceof AppError) {
         throw err;
       }
-      if (err instanceof Error && isValidationError(err)) {
+      if (err instanceof ValidationError) {
         throw new AppError({
           statusCode: 400,
           code: "VALIDATION_ERROR",
@@ -46,11 +47,4 @@ export class CreateUser {
       throw err;
     }
   }
-}
-
-function isValidationError(err: Error): boolean {
-  return (
-    err.message.includes("Invalid email") ||
-    err.message.includes("Name cannot be empty")
-  );
 }
