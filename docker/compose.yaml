@@ -16,6 +16,8 @@ services:
     container_name: api-container
     ports:
       - 8080:8080
+    depends_on:
+      - db
 
   db:
     image: postgres:latest
@@ -28,6 +30,22 @@ services:
       - 5432:5432
     volumes:
       - db_data:/var/lib/postgresql
+      - ./migrations:/docker-entrypoint-initdb.d
+
+  migrate:
+    image: postgres:latest
+    container_name: migrate-container
+    profiles:
+      - tools
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: "postgresql://user:password@db:5432/mydb"
+      MIGRATIONS_DIR: "/app/migrations"
+    volumes:
+      - ..:/app:ro
+    working_dir: /app
+    entrypoint: ["/bin/sh", "-c", "/app/scripts/migrations.sh"]
 
 volumes:
   db_data:
