@@ -10,7 +10,8 @@ import {
 } from "../../../../setup/testTypes";
 
 describe("HealthCheckController", () => {
-  let mockHealthCheck: { check: jest.Mock };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let mockHealthCheck: { check: jest.Mock<any> };
   let controller: HealthCheckController;
   let mockRequest: Partial<Request>;
   let mockResponse: MockResponse;
@@ -20,7 +21,7 @@ describe("HealthCheckController", () => {
 
   beforeEach(() => {
     mockHealthCheck = {
-      check: jest.fn(),
+      check: jest.fn<any>(),
     };
 
     controller = new HealthCheckController(
