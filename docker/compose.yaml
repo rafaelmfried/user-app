@@ -1,13 +1,16 @@
+name: app
 services:
   api:
+    image: api-image:1.0.0
     build:
       context: ..
       dockerfile: docker/Dockerfile
       args:
-        NODE_VERSION: "22.20.0"
-        ALPINE_VERSION: "3.20"
+        NODE_VERSION: "22.22.0"
+        ALPINE_VERSION: "3.22"
     environment:
-      NODE_VERSION: 22.20.0
+      NODE_VERSION: "22.22.0"
+      NODE_ENV: production
     container_name: api-container
     ports:
       - 8080:8080
@@ -22,6 +25,7 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - db_data:/var/lib/postgresql
+
 volumes:
   db_data:
