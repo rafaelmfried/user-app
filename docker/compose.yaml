@@ -19,6 +19,32 @@ services:
     depends_on:
       - db
 
+  api-dev:
+    image: api-image-dev:1.0.0
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      target: development
+      args:
+        NODE_VERSION: "22.22.0"
+        ALPINE_VERSION: "3.22"
+    environment:
+      DATABASE_URL: "postgresql://user:password@db:5432/mydb"
+      NODE_ENV: development
+      PORT: 8080
+      TSC_WATCHFILE: "usePolling"
+      TSC_WATCHDIRECTORY: "usePolling"
+    container_name: api-container-dev
+    ports:
+      - 8080:8080
+    volumes:
+      - ..:/app
+      - /app/node_modules
+    depends_on:
+      - db
+    profiles:
+      - dev
+
   db:
     image: postgres:latest
     container_name: db-container

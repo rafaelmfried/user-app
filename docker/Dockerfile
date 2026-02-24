@@ -16,6 +16,12 @@ COPY . .
 RUN pnpm run build \
     && pnpm prune --prod
 
+# Stage 3: Development
+FROM deps AS development
+WORKDIR /app
+ENV NODE_ENV=development
+CMD ["pnpm", "run", "start:dev"]
+
 # Stage 3: Runtime minimo
 FROM node:${NODE_VERSION}-alpine${ALPINE_VERSION} AS production
 WORKDIR /app
