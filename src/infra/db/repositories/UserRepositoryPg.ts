@@ -5,7 +5,7 @@ import type {
   UserRepositoryPort,
 } from "../../../domain/user/UserRepository.js";
 import { Email } from "../../../domain/value-objects/Email.js";
-import { PgClient } from "./PgClient.js";
+import { PgClient } from "../client/PgClient.js";
 
 export class UserRepositoryPg implements UserRepositoryPort {
   constructor(private readonly db: PgClient) {}
