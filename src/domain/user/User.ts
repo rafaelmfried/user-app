@@ -1,4 +1,4 @@
-import type { Email } from "../value-objects/Email.js";
+import type { Email } from "../value-objects/index.js";
 
 export class User {
   private id?: number;

@@ -1,4 +1,4 @@
-import type { UserRepositoryPort } from "../../domain/user/UserRepository.js";
+import type { UserRepositoryPort } from "../../domain/user/index.js";
 import type { UserDTO } from "./UserDTO.js";
 import { toUserDTO } from "./UserDTO.js";
 

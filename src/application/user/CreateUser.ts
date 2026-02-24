@@ -1,7 +1,7 @@
-import { User } from "../../domain/user/User.js";
-import type { UserRepositoryPort } from "../../domain/user/UserRepository.js";
-import { Email } from "../../domain/value-objects/Email.js";
-import { AppError } from "../../shared/errors/AppError.js";
+import { User } from "../../domain/user/index.js";
+import type { UserRepositoryPort } from "../../domain/user/index.js";
+import { Email } from "../../domain/value-objects/index.js";
+import { AppError } from "../../shared/errors/index.js";
 import type { CreateUserInput, UserDTO } from "./UserDTO.js";
 import { toUserDTO } from "./UserDTO.js";
 
