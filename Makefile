@@ -4,16 +4,16 @@
 
 # ==================== Application ====================
 build:
-	docker-compose -f docker/compose.yaml build
+	docker compose -f docker/compose.yaml build
 
 up:
-	docker-compose -f docker/compose.yaml up -d
+	docker compose -f docker/compose.yaml up -d
 
 down:
-	docker-compose -f docker/compose.yaml down
+	docker compose -f docker/compose.yaml down
 
 logs:
-	docker-compose -f docker/compose.yaml logs --follow
+	docker compose -f docker/compose.yaml logs --follow
 
 recriate: down up
 
